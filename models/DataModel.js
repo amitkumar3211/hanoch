@@ -299,6 +299,36 @@ const events = new mongoose.Schema(
 
 const Event = mongoose.model("Event", events);
 
+
+
+const Sparelist = new mongoose.Schema({
+  refNo: {
+    type: String,
+    required: false,
+  },
+  description: {
+    type: String,
+    required: false,
+  },
+  currentStock: {
+    type: String,
+    required: false,
+  },
+  minStock: {
+    type: String,
+    required: false,
+  },
+  maxStock: {
+    type: String,
+    required: false,
+  },
+  drowing:{
+    type: String,
+    required: false,
+  }
+});
+const Spare = mongoose.model("Spare", Sparelist);
+
 // Export the model
 module.exports = {
   DataModel,
@@ -310,4 +340,5 @@ module.exports = {
   Inventory,
   BatchControl,
   Event,
+  Spare,
 };

@@ -40,6 +40,7 @@ const {
   childPart,
   Inventory,
   BatchControl,
+  Spare,
 } = require("./models/DataModel");
 
 // Hash the password before saving it to the database
@@ -2898,5 +2899,53 @@ app.use("/api/events", verifyToken, eventRoutes);
 
 //Machine Graph Data related APIs
 app.use("/api/graphData", verifyToken, graphDataRoutes);
+
+
+// create spare list
+app.post("/create/sparelist", verifyToken, async (req, res) => {
+  console.log("this is req.body", req.body);
+  try {
+    // Create a new document based on the FormData model
+    const spare = new Spare({
+      refNo: req.body.refNo,
+      description : req.body.description,
+      currentStock : req.body.currentStock,
+      minStock : req.body.minStock,
+      maxStock : req.body.maxStock,
+      // drowing :  req.body.drowing,
+    });
+
+    await spare.save();
+
+    res.status(201).json({ message: "Data Added successfully" });
+
+  } catch (error) {
+    console.error("Error creating new Batch Control Data", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// get all sare list data
+app.get("/api/all/batchControl", verifyToken, async (req, res) => {
+  try {
+    //console.log(req.body);
+    // const { company_name } = req.body;
+    //console.log(req.userId);
+    //const user = await User.findById(req.userId);
+    // if (user.email === 'admin@gmail.com') {
+    const spare = await Spare.find({}).populate("Spare");
+    // console.log(inventory);
+
+    res.status(200).json(spare);
+    //}
+    // else {
+    //    return res.status(401).json({ error: 'Unauthorized - Invalid token' });
+    // }
+  } catch (err) {
+    console.error("Error finding batch control data:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 module.exports = app;
