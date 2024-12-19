@@ -2902,16 +2902,18 @@ app.use("/api/graphData", verifyToken, graphDataRoutes);
 
 
 // create spare list
-app.post("/create/sparelist", verifyToken, async (req, res) => {
+app.post("/create/sparelist", verifyToken,upload.single("drawing"), async (req, res) => {
   console.log("this is req.body", req.body);
   try {
     // Create a new document based on the FormData model
+    const fileName = req.file ? req.file.filename : null;
     const spare = new Spare({
       refNo: req.body.refNo,
       description : req.body.description,
       currentStock : req.body.currentStock,
       minStock : req.body.minStock,
       maxStock : req.body.maxStock,
+      drawing: fileName,
       // drowing :  req.body.drowing,
     });
 
@@ -2947,5 +2949,38 @@ app.get("/api/all/batchControl", verifyToken, async (req, res) => {
   }
 });
 
+// edit spare list item
 
+
+// delete spare list item 
+// app.delete(
+//   "/api/delete/inventory/:inventoryId",
+//   verifyToken,
+//   async (req, res) => {
+//     try {
+//       //console.log(req.body);
+//       // const { company_name } = req.body;
+//       //console.log(req.userId);
+//       console.log(req.params);
+//       const user = await User.findById(req.userId);
+//       // if (user.role === "admin") {
+//       const inventoryId = req.params.inventoryId;
+//       //console.log(machineId);
+//       // Find the user by ID and delete
+//       const deletedInventory = await Inventory.findByIdAndDelete(inventoryId);
+
+//       if (!deletedInventory) {
+//         return res.status(404).json({ error: "Inventory not found" });
+//       }
+
+//       res.status(200).json({ message: "Inventory deleted successfully" });
+//       // } else {
+//       //   return res.status(401).json({ error: "Unauthorized - Invalid token" });
+//       // }
+//     } catch (error) {
+//       console.error("Error deleting Inventory", error);
+//       res.status(500).json({ error: "Internal Server Error" });
+//     }
+//   }
+// );
 module.exports = app;
