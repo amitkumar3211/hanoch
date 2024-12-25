@@ -2951,7 +2951,7 @@ app.get("/api/all/sparelist", verifyToken, async (req, res) => {
 });
 
 // edit spare list item
-app.put("api/update/sparelist/:id", upload.single("drawing"), async (req, res) => {
+app.patch("api/update/sparelist/:id",verifyToken, upload.single("drawing"), async (req, res) => {
   try {
     // Extract the spare ID from the request parameters
     const { id } = req.params;
