@@ -2990,34 +2990,27 @@ app.patch("/api/update/sparelist/:id",verifyToken, upload.single("drawing"), asy
 
 
 // delete spare list item 
-// app.delete(
-//   "/api/delete/inventory/:inventoryId",
-//   verifyToken,
-//   async (req, res) => {
-//     try {
-//       //console.log(req.body);
-//       // const { company_name } = req.body;
-//       //console.log(req.userId);
-//       console.log(req.params);
-//       const user = await User.findById(req.userId);
-//       // if (user.role === "admin") {
-//       const inventoryId = req.params.inventoryId;
-//       //console.log(machineId);
-//       // Find the user by ID and delete
-//       const deletedInventory = await Inventory.findByIdAndDelete(inventoryId);
+app.delete("/api/delete/sparelist/:id", async (req, res) => {
+  try {
+    // Extract the spare ID from the request parameters
+    const { id } = req.params;
 
-//       if (!deletedInventory) {
-//         return res.status(404).json({ error: "Inventory not found" });
-//       }
+    // Find the spare by ID and delete it
+    const deletedSpare = await Spare.findByIdAndDelete(id);
 
-//       res.status(200).json({ message: "Inventory deleted successfully" });
-//       // } else {
-//       //   return res.status(401).json({ error: "Unauthorized - Invalid token" });
-//       // }
-//     } catch (error) {
-//       console.error("Error deleting Inventory", error);
-//       res.status(500).json({ error: "Internal Server Error" });
-//     }
-//   }
-// );
+    // If the spare is not found, return a 404 error
+    if (!deletedSpare) {
+      return res.status(404).json({ message: "Spare not found" });
+    }
+
+    res.status(200).json({ message: "Spare deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting spare", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+
+
 module.exports = app;
