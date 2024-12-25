@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -15,10 +16,7 @@
     "mongoose": "^8.0.4",
     "mqtt": "^5.3.4",
     "multer": "^1.4.5-lts.1",
-<<<<<<< HEAD
-    "nodemon": "^3.1.9"
-=======
+    "nodemon": "^3.1.9",
     "pm2": "^5.4.3"
->>>>>>> 5023311 (chn)
   }
 }
