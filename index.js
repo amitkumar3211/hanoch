@@ -2928,7 +2928,7 @@ app.post("/create/sparelist", verifyToken,upload.single("drawing"), async (req, 
 });
 
 // get all sare list data
-app.get("/api/all/batchControl", verifyToken, async (req, res) => {
+app.get("/api/all/sparelist", verifyToken, async (req, res) => {
   try {
     //console.log(req.body);
     // const { company_name } = req.body;
