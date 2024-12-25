@@ -322,7 +322,7 @@ const Sparelist = new mongoose.Schema({
     type: String,
     required: false,
   },
-  drowing:{
+  drawing:{
     type: String,
     required: false,
   }
