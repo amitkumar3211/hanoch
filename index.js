@@ -2936,7 +2936,7 @@ app.get("/api/all/sparelist", verifyToken, async (req, res) => {
     //const user = await User.findById(req.userId);
     // if (user.email === 'admin@gmail.com') {
     const spare = await Spare.find({});
-    
+
     // console.log(inventory);
 
     res.status(200).json(spare);
@@ -2951,6 +2951,42 @@ app.get("/api/all/sparelist", verifyToken, async (req, res) => {
 });
 
 // edit spare list item
+app.put("api/update/sparelist/:id", upload.single("drawing"), async (req, res) => {
+  try {
+    // Extract the spare ID from the request parameters
+    const { id } = req.params;
+
+    // Build the update object
+    const updateData = {
+      refNo: req.body.refNo,
+      description: req.body.description,
+      currentStock: req.body.currentStock,
+      minStock: req.body.minStock,
+      maxStock: req.body.maxStock,
+    };
+
+    // If a new file is uploaded, include the file name in the update
+    if (req.file) {
+      updateData.drawing = req.file.filename;
+    }
+
+    // Find the spare by ID and update it
+    const updatedSpare = await Spare.findByIdAndUpdate(id, updateData, {
+      new: true, // Return the updated document
+      runValidators: true, // Validate the updated data
+    });
+
+    // If the spare is not found, return a 404 error
+    if (!updatedSpare) {
+      return res.status(404).json({ message: "Spare not found" });
+    }
+
+    res.status(200).json({ message: "Spare updated successfully", data: updatedSpare });
+  } catch (error) {
+    console.error("Error updating spare", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 // delete spare list item 
