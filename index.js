@@ -2935,7 +2935,7 @@ app.get("/api/all/sparelist", verifyToken, async (req, res) => {
     //console.log(req.userId);
     //const user = await User.findById(req.userId);
     // if (user.email === 'admin@gmail.com') {
-    const spare = await Spare.find({}).populate("Spare");
+    const spare = await Spare.find({});
     // console.log(inventory);
 
     res.status(200).json(spare);
